@@ -108,6 +108,7 @@ function M.setup()
     vim.keymap.set("n", "<leader>:", pick("commands"))
     vim.keymap.set("n", "<leader><leader>", pick("pickers"))
     vim.keymap.set("n", "<leader>a", "<cmd>Alpha<CR>", { desc = "Start screen" })
+    vim.keymap.set("n", "<leader>gf", "<cmd>RevealInExplorer<CR>", { desc = "Reveal file under cursor in file manager" })
 
     vim.keymap.set("n", "gs", require("substitute").operator, { noremap = true })
     vim.keymap.set("n", "gss", require("substitute").line, { noremap = true })
