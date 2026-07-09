@@ -175,6 +175,7 @@ function M.setup()
         auto_install = true,
         ignore_install = {},
         modules = {},
+        highlight = { enable = true },
         textobjects = {
             select = {
                 enable = true,
@@ -194,6 +195,12 @@ function M.setup()
             },
         },
     })
+
+    -- nvim-treesitter (master) markdown injection queries crash on nvim 0.12's
+    -- runtime ("attempt to call method 'range'"). Override them with empty
+    -- queries; markview.nvim handles code-block rendering anyway.
+    pcall(vim.treesitter.query.set, "markdown", "injections", "")
+    pcall(vim.treesitter.query.set, "markdown_inline", "injections", "")
 end
 
 return M
