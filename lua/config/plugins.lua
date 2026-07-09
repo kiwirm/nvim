@@ -54,6 +54,7 @@ function M.setup()
         "https://github.com/saghen/blink.cmp",
         "https://github.com/rafamadriz/friendly-snippets",
         "https://github.com/declancm/cinnamon.nvim",
+        "https://github.com/goolord/alpha-nvim",
     })
     vim.pack.add({
         { src = "https://github.com/chomosuke/typst-preview.nvim" },
@@ -136,6 +137,39 @@ function M.setup()
     require("leap").add_default_mappings()
     require("oil").setup()
     require("substitute").setup()
+
+    -- Start screen with a live clock (shown when nvim opens with no file).
+    local alpha = require("alpha")
+    local dashboard = require("alpha.themes.dashboard")
+    local function clock_str()
+        return os.date("%A %d %B   %H:%M:%S")
+    end
+    local clock_line = {
+        type = "text",
+        val = clock_str(),
+        opts = { position = "center", hl = "Comment" },
+    }
+    dashboard.section.buttons.val = {
+        dashboard.button("f", "Find file", "<cmd>lua Snacks.picker.files()<CR>"),
+        dashboard.button("r", "Recent files", "<cmd>lua Snacks.picker.recent()<CR>"),
+        dashboard.button("g", "Live grep", "<cmd>lua Snacks.picker.grep()<CR>"),
+        dashboard.button("e", "New file", "<cmd>ene<CR>"),
+        dashboard.button("q", "Quit", "<cmd>qa<CR>"),
+    }
+    dashboard.config.layout = {
+        { type = "padding", val = 6 },
+        clock_line,
+        { type = "padding", val = 2 },
+        dashboard.section.buttons,
+    }
+    alpha.setup(dashboard.config)
+    local clock_timer = assert(vim.uv.new_timer())
+    clock_timer:start(1000, 1000, vim.schedule_wrap(function()
+        clock_line.val = clock_str()
+        if vim.bo.filetype == "alpha" then
+            pcall(alpha.redraw)
+        end
+    end))
 
     vim.api.nvim_create_autocmd("FileType", {
         pattern = { "markdown" },
