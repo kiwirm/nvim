@@ -27,7 +27,7 @@ end
 local MASON_ENSURE = {
     "lua-language-server",
     "pyright",
-    "ruff",
+    -- ruff is provided globally via mise so it resolves in every project
     "clangd",
     "typescript-language-server",
     "debugpy",
