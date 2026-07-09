@@ -40,16 +40,17 @@ function M.setup()
         "https://github.com/stevearc/oil.nvim",
         "https://github.com/ibhagwan/fzf-lua",
         "https://github.com/nvim-lualine/lualine.nvim",
-        "https://github.com/nvim-treesitter/nvim-treesitter",
+        { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master" },
         "https://github.com/lewis6991/gitsigns.nvim",
         "https://github.com/kylechui/nvim-surround",
         "https://github.com/ggandor/leap.nvim",
         "https://github.com/gbprod/substitute.nvim",
-        "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
+        { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "master" },
         "https://github.com/neovim/nvim-lspconfig",
         "https://github.com/mason-org/mason.nvim",
         "https://github.com/mfussenegger/nvim-dap",
         "https://github.com/mfussenegger/nvim-dap-python",
+        "https://github.com/saghen/blink.lib",
         "https://github.com/saghen/blink.cmp",
         "https://github.com/rafamadriz/friendly-snippets",
         "https://github.com/declancm/cinnamon.nvim",
@@ -128,7 +129,7 @@ function M.setup()
             cmd = "(rg --files --hidden --follow --glob '!.git' --glob '!**/.git/**' --color=never; rg --files --hidden --follow --no-ignore --glob '!.git' --glob '!**/.git/**' --glob '**/.env*' --glob '.env*' --color=never) | awk '!seen[$0]++' | sort -f",
         },
     })
-    require("leap").set_default_mappings()
+    require("leap").add_default_mappings()
     require("oil").setup()
     require("substitute").setup()
 
