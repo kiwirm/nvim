@@ -7,11 +7,20 @@ local side_panel = {
     active_kind = nil,
 }
 
+-- Use PowerShell for the side terminal on Windows (prefer pwsh 7, else the
+-- built-in Windows PowerShell); the default shell elsewhere.
+local function terminal_cmd()
+    if vim.fn.has("win32") == 1 then
+        return vim.fn.executable("pwsh") == 1 and { "pwsh" } or { "powershell" }
+    end
+    return { vim.o.shell }
+end
+
 local side_panels = {
     terminal = {
         buf = nil,
         job = nil,
-        cmd = { vim.o.shell },
+        cmd = terminal_cmd(),
         filetype = "side-terminal",
     },
     claude = {
