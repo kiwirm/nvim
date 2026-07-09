@@ -172,7 +172,7 @@ function M.setup()
                 git_branch_files_component,
             },
         },
-        extensions = { "fzf" },
+        extensions = {},
     })
 end
 

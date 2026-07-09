@@ -38,7 +38,7 @@ function M.setup()
     vim.pack.add({
         "https://github.com/ellisonleao/gruvbox.nvim",
         "https://github.com/stevearc/oil.nvim",
-        "https://github.com/ibhagwan/fzf-lua",
+        "https://github.com/folke/snacks.nvim",
         "https://github.com/nvim-lualine/lualine.nvim",
         { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master" },
         "https://github.com/lewis6991/gitsigns.nvim",
@@ -122,11 +122,15 @@ function M.setup()
             console = "internalConsole",
         })
     end
-    vim.g.fzf_history_dir = vim.fn.stdpath("state") .. "/fzf-history"
-    vim.fn.mkdir(vim.g.fzf_history_dir, "p")
-    require("fzf-lua").setup({
-        files = {
-            cmd = "(rg --files --hidden --follow --glob '!.git' --glob '!**/.git/**' --color=never; rg --files --hidden --follow --no-ignore --glob '!.git' --glob '!**/.git/**' --glob '**/.env*' --glob '.env*' --color=never) | awk '!seen[$0]++' | sort -f",
+    require("snacks").setup({
+        -- Native-nvim picker: renders in a normal window (no fzf/ConPTY), so it
+        -- opens far faster than fzf-lua on Windows. Keymaps live in keymaps.lua.
+        picker = {
+            enabled = true,
+            sources = {
+                -- show dotfiles (e.g. .env) in the files picker
+                files = { hidden = true },
+            },
         },
     })
     require("leap").add_default_mappings()
