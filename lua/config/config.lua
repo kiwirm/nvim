@@ -17,6 +17,15 @@ function M.setup()
     end
 
     vim.g.mapleader = " "
+
+    -- Disable unused rplugin host providers. Nothing here uses `:python3`/`:ruby`
+    -- etc. (LSP and DAP run their own processes), and probing for them adds
+    -- noticeable latency, especially the python3 provider when opening .py files.
+    vim.g.loaded_python3_provider = 0
+    vim.g.loaded_ruby_provider = 0
+    vim.g.loaded_perl_provider = 0
+    vim.g.loaded_node_provider = 0
+
     vim.o.foldignore = ""
     vim.o.number = true
     vim.o.signcolumn = "yes"
