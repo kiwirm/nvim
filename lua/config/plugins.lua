@@ -129,8 +129,13 @@ function M.setup()
         picker = {
             enabled = true,
             sources = {
-                -- show dotfiles (e.g. .env) in the files picker
-                files = { hidden = true },
+                -- show dotfiles (e.g. .env) in the files picker.
+                -- On Windows, rg/fd emit backslash paths, but the picker matches
+                -- against that raw text while displaying forward slashes -- so
+                -- typing "/" matched nothing. Force the finder to emit "/" so the
+                -- match text lines up with what's shown.
+                files = { hidden = true, args = { "--path-separator", "/" } },
+                grep = { args = { "--path-separator", "/" } },
             },
         },
     })
